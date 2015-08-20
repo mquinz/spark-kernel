@@ -399,6 +399,7 @@ class ScalaInterpreter(
 
 //   ADD IMPORTS generates too many classes, client is responsible for adding import
       logger.debug("Adding org.apache.spark.SparkContext._ to imports")
+      sparkIMain.addImports("com.datastax.spark.connector._")
       sparkIMain.addImports("org.apache.spark.SparkContext._")
     }
 

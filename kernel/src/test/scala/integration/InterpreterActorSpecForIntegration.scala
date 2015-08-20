@@ -26,6 +26,7 @@ import com.ibm.spark.kernel.protocol.v5.content._
 import com.ibm.spark.kernel.protocol.v5.interpreter.InterpreterActor
 import com.ibm.spark.kernel.protocol.v5.interpreter.tasks.InterpreterTaskFactory
 import com.typesafe.config.ConfigFactory
+import com.datastax.spark.connector._
 import org.apache.spark.{SparkConf, SparkContext}
 import org.scalatest.mock.MockitoSugar
 import org.scalatest.{BeforeAndAfter, FunSpecLike, Matchers}

@@ -22,6 +22,7 @@ import com.ibm.spark.kernel.protocol.v5.KMBuilder
 import com.ibm.spark.kernel.protocol.v5.kernel.ActorLoader
 import com.ibm.spark.utils.LogLike
 import com.typesafe.config.Config
+import com.datastax.spark.connector._
 import org.apache.spark.{SparkConf, SparkContext}
 import org.mockito.ArgumentCaptor
 import org.mockito.Matchers._

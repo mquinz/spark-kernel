@@ -25,6 +25,7 @@ import com.ibm.spark.kernel.protocol.v5.kernel.ActorLoader
 import com.ibm.spark.security.KernelSecurityManager
 import com.ibm.spark.utils.LogLike
 import com.typesafe.config.Config
+import com.datastax.spark.connector._
 import org.apache.spark.SparkContext
 import org.zeromq.ZMQ
 
