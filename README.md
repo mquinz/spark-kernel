@@ -1,4 +1,4 @@
-Spark Kernel
+Spark Kernel - with Cassandra support
 ============
 
 [![Build Status][build-badge]][build-url]
