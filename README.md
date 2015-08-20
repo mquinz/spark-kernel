@@ -36,6 +36,29 @@ The kernel provides several key features for applications:
 
 The project intends to provide applications with the ability to send both packaged jars and code snippets. As it implements the latest IPython message protocol (5.0), the Spark Kernel can easily plug into the 3.x branch of IPython for quick, interactive data exploration. The Spark Kernel strives to be extensible, providing a [pluggable interface][3] for developers to add their own functionality.
 
+For Cassandra you may need to override some of the spark cassandra connector settings such as
+
+    spark.cassandra.connection.host 127.0.0.1
+
+If you're starting the kernel from the command line, you can add spark settings to the command line as follows:
+
+    --spark-configuration spark.cassandra.connection.host
+
+use a --spark-configuration for each separate parameter
+
+If you're starting it through iPython notebook, you will have created a kernel.json file.  Add this to the args
+
+    "--spark-configuration",
+    "spark.cassandra.connection.host=127.0.0.1"
+
+
+    
+        
+
+
+
+
+
 __If you are new to the Spark Kernel, please see the [Getting Started][4] section.__
 
 __For more information, please visit the [Spark Kernel wiki][5].__
