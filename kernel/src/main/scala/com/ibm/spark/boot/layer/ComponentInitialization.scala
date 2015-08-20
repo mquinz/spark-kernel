@@ -32,6 +32,7 @@ import com.ibm.spark.magic.builtin.BuiltinLoader
 import com.ibm.spark.magic.dependencies.DependencyMap
 import com.ibm.spark.utils.{MultiClassLoader, TaskManager, KeyValuePairUtils, LogLike}
 import com.typesafe.config.Config
+import com.datastax.spark.connector._
 import org.apache.spark.{SparkContext, SparkConf}
 
 import scala.collection.JavaConverters._
