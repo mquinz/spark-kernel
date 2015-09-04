@@ -1,10 +1,12 @@
-Spark Kernel
+Spark Kernel - with Cassandra support
 ============
 
 [![Build Status][build-badge]][build-url]
 [![Coverage Status][coverage-badge]][coverage-url]
 [![Scaladoc][scaladoc-badge]][scaladoc-url]
 [![License][license-badge]][license-url]
+
+#### Note: To download and install, click releases above, and read that stuff.
 
 Requires JDK 1.7 or higher!
 
