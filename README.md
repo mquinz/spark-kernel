@@ -1,6 +1,66 @@
 Spark Kernel - with Cassandra support
 ============
 
+### To get ipython notebook
+
+Obviously you need python.  Install these python packages
+
+    pip install ipython
+    pip install notebook
+
+### To set it up:
+
+unpack the zip file
+
+create the directory
+
+    ~/.ipython/kernels/spark
+
+create the file
+
+    ~/.ipython/kernels/spark/kernel.json
+
+ and paste in the following contents:  Note you need to update a path to sparkkernel
+
+```
+{
+    "display_name": "Spark 1.2.1 (Scala 2.10.4)",
+    "language": "scala",
+    "argv": [
+        "/<path>/<to>/spark-kernel/bin/sparkkernel",
+        "--profile",
+        "{connection_file}",
+     ],
+     "codemirror_mode": "scala"
+}
+```
+If you nee to override the connection host, add these lines to the argv map above
+
+       "--spark-configuration",
+       "spark.cassandra.connection.host=127.0.0.1"
+
+
+### To run it
+
+    ipython notebook
+
+In the browser - create a new spark notebook
+
+![image](https://cloud.githubusercontent.com/assets/2955904/9398338/fe850f02-475a-11e5-9fea-86bfcdbfbbad.png)
+
+### ... and spark away
+
+![image](https://cloud.githubusercontent.com/assets/2955904/9398374/60c4bef6-475b-11e5-8eca-62add0d38763.png)
+
+If you don't get output, try adding a .toString on the end. There seems to be a bug rendering some types.
+
+### Running CQL Statements with the %%Cql Magic
+
+Simply prefix your CQL Statement with %%Cql in its own cell
+
+
+
+
 [![Build Status][build-badge]][build-url]
 [![Coverage Status][coverage-badge]][coverage-url]
 [![Scaladoc][scaladoc-badge]][scaladoc-url]
