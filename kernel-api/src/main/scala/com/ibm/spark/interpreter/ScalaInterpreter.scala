@@ -202,7 +202,9 @@ class ScalaInterpreter(
   }
 
   def truncateResult(result:String, showType:Boolean =false, noTruncate: Boolean = false): String = {
-    val resultRX="""(res\d+):\s+(\S+)\s+=\s+(.*)""".r
+
+    // The (?s) allows newline characters in the string
+    val resultRX="""(?s)(res\d+):\s+(.*)\s+=\s+(.*)""".r
 
     result match {
       case resultRX(varName,varType,resString) => {

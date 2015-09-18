@@ -50,18 +50,17 @@ with IncludeOutputStream with IncludeSparkContext {
   }
 
   def htmlFromCql(code: String) =  {
-//    val connector = CassandraConnector(new SparkConf().set("spark.cassandra.connection.host", "127.0.0.1"))
     val connector = CassandraConnector(sparkContext.getConf)
 
     "<table>" + connector.withSessionDo{
       session => {val rows = session.execute(code)
         val cols = rows.getColumnDefinitions
-        "<tr>" + (for (col <- cols) yield "<th>" + col.getName + "</th>" ).mkString + "<tr>" +
+        "<tr>" + (for (col <- cols) yield "<th>" + col.getName + "</th>" ).mkString + "</tr>" +
           (for (row <- rows)
             yield "<tr>"
-              + (for (col <- cols) yield "<td>" + row.getStringForCol(col)
-              + "</td>"
-              ).mkString + "</tr>").mkString
+              + (for (col <- cols) yield "<td>" + row.getStringForCol(col) + "</td>").mkString
+              + "</tr>"
+            ).mkString
       }
     } + "</table>"
   }
