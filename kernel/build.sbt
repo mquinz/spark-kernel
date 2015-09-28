@@ -25,10 +25,6 @@ packArchive <<= packArchive dependsOn (rebuildIvyXml dependsOn deliverLocal)
 libraryDependencies +=
   "org.spark-project.akka" %% "akka-testkit" % "2.3.4-spark" % "test" // MIT
 
-//
-// SPARK-CASSANDRA CONNECTOR DEPENDENCIES
-//
-libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "1.4.0" % "compile"
 
 //
 // CUSTOM TASKS

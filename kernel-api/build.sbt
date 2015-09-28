@@ -1,3 +1,4 @@
+import sbt.ExclusionRule
 import xerial.sbt.Pack._
 import Common._
 /*
@@ -51,6 +52,8 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-mllib" % sparkVersion.value,          // Apache v2
   "org.apache.spark" %% "spark-graphx" % sparkVersion.value,         // Apache v2
   "org.apache.spark" %% "spark-repl" % sparkVersion.value excludeAll // Apache v2
+    ExclusionRule(organization = "org.apache.hadoop"),
+  "com.datastax.spark" %% "spark-cassandra-connector" % "1.4.0" excludeAll // SPARK-CASSANDRA CONNECTOR DEPENDENCIES
     ExclusionRule(organization = "org.apache.hadoop")
 )
 
