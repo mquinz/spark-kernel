@@ -28,7 +28,7 @@ libraryDependencies +=
 //
 // SPARK-CASSANDRA CONNECTOR DEPENDENCIES
 //
-libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "1.3.0" % "compile"
+libraryDependencies += "com.datastax.spark" %% "spark-cassandra-connector" % "1.4.0" % "compile"
 
 //
 // CUSTOM TASKS
