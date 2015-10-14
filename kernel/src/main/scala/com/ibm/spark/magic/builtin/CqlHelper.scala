@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat
 import com.datastax.driver.core.DataType.Name._
 import scala.collection.JavaConverters._
 import com.datastax.driver.core.{DataType, UDTValue, GettableByNameData}
+import collection.JavaConversions._
 
 /**
  * DataStax Academy Sample Application
@@ -42,7 +43,7 @@ object CqlHelper {
         case LIST => row.getList(colName, colType.getTypeArguments.get(0).asJavaClass)
         case MAP => row.getMap(colName, colType.getTypeArguments.get(0).asJavaClass, colType.getTypeArguments.get(1).asJavaClass)
         case SET => row.getSet(colName, colType.getTypeArguments.get(0).asJavaClass)
-        case UDT => row.getUDTValue(colName).getType.getFieldNames
+        case UDT =>  val v = row.getUDTValue(colName); "{" + v.getType.getFieldNames.map(n => n + ":" + v.getAsString(n, v.getType.getFieldType(n))).mkString(", ") + "}"
       }
     }.toString
   }
