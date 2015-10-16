@@ -51,9 +51,9 @@ with IncludeOutputStream with IncludeSparkContext {
     def table2tbl (t:TableDef) = "<b>" +
       t.keyspaceName + "." + t.tableName +
       "</b><table>" +
-      (t.partitionKey.map(col2td) ++
-      t.clusteringColumns.map(col2td) ++
-      t.regularColumns.map(col2td)).mkString +
+      (t.partitionKey ++
+      t.clusteringColumns ++
+      t.regularColumns).map(col2td).mkString +
       "</table>"
 
 

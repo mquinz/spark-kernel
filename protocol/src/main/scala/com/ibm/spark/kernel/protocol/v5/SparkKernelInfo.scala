@@ -47,7 +47,7 @@ object SparkKernelInfo {
   /**
    * Represents the displayed name of the kernel.
    */
-  val banner                  = "IBM Spark Kernel"
+  val banner                  = "IBM/DataStax Spark Kernel"
 
   /**
    * Represents the name of the user who started the kernel process.
