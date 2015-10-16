@@ -132,7 +132,7 @@ fi
 
 
 PROG_NAME=sparkkernel
-PROG_VERSION=0.1.4.2-cassandra-SNAPSHOT
+PROG_VERSION=0.1.4.2-cassandra
 
 # OPTIMIZE THE CLASSPATH for DSE
 
