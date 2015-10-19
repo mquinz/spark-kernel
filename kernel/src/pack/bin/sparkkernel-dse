@@ -149,7 +149,7 @@ KERNEL_JARS="$KERNEL_JARS ${PROG_HOME}/lib/jopt-simple-4.6.jar"
 KERNEL_JARS="$KERNEL_JARS ${PROG_HOME}/lib/jeromq-0.3.4.jar"
 
 
-KERNEL_CLASSPATH=$(sed 's/ /:/g' <<< $KERNEL_JARS)
+KERNEL_CLASSPATH=$(echo "$KERNEL_JARS" | sed 's/ /:/g')
 BIG_CLASSPATH=${KERNEL_CLASSPATH}:${DSE_CLASSPATH}
 
 exec "$JAVACMD" \
