@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #set -x
 
 SPARKKERNEL="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
@@ -11,10 +11,10 @@ else
   JUPYTER_CONFIGS=$HOME/.local/share/jupyter/kernels
 fi
 
-if [ "$1" != "" ] ; then
-  CLUSTER_HOSTNAME=$1
-else
+if [ "$1" == "" ] ; then
   CLUSTER_HOSTNAME=127.0.0.1
+else
+  CLUSTER_HOSTNAME=$1
   MASTER=spark://$CLUSTER_HOSTNAME:7077
 fi
 
