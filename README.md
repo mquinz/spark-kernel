@@ -1,44 +1,25 @@
-Spark Kernel - with Cassandra support
+DataStax Enterprise Spark Kernels for Scala and Python
 ============
+
+### Prerequisites:
+DataStax Enterprise 4.8
+Python 2.7
+Scala (for Scala users)
+Jupyter
 
 ### To get ipython notebook
 
-Obviously you need python.  Install these python packages
+Obviously you need python 2.7.  Install these python packages
 
-    pip install ipython
-    pip install notebook
+    pip install jupyter
 
 ### To set it up:
 
-unpack the zip file
+1. Unpack the tarball downloaded from http://github.com/slowenthal/spark-kernel/releases
+2. in the tarball, navigate to the bin directory
+3. Run setup.sh <ip address for spark master>.   If your spark master is 127.0.0.1, you can leave out the ip address.
 
-create the directory
-
-    ~/.ipython/kernels/spark
-
-create the file
-
-    ~/.ipython/kernels/spark/kernel.json
-
- and paste in the following contents:  Note you need to update a path to sparkkernel
-
-```
-{
-    "display_name": "Spark 1.2.1 (Scala 2.10.4)",
-    "language": "scala",
-    "argv": [
-        "/<path>/<to>/spark-kernel/bin/sparkkernel",
-        "--profile",
-        "{connection_file}",
-     ],
-     "codemirror_mode": "scala"
-}
-```
-If you nee to override the connection host, add these lines to the argv map above
-
-       "--spark-configuration",
-       "spark.cassandra.connection.host=127.0.0.1"
-
+If you are on an edge node, copy the hadoop configuration file dse-core-defaults.xml from a node in your cluster to your local DSE directories.
 
 ### To run it
 
