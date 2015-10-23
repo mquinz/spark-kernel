@@ -1,4 +1,8 @@
 
+1.4.0.3-cassandra
+Add setup.sh script
+Add readme.md file
+
 1.4.0.2-cassandra
 
 Add DSE support

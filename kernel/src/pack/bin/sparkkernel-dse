@@ -132,21 +132,21 @@ fi
 
 
 PROG_NAME=sparkkernel
-PROG_VERSION=0.1.4.2-cassandra
+PROG_VERSION=0.1.4.3-cassandra
 
 # OPTIMIZE THE CLASSPATH for DSE
 
 KERNEL_JARS=$(echo ${PROG_HOME}/lib/communication_2.10-${PROG_VERSION}.jar)
-KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/kernel-api_2.10-${PROG_VERSION}.jar)"
-KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/kernel_2.10-${PROG_VERSION}.jar)"
-KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/macros_2.10-${PROG_VERSION}.jar)"
-KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/protocol_2.10-${PROG_VERSION}.jar)"
+KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/kernel-api_2.10-*.jar)"
+KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/kernel_2.10-*.jar)"
+KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/macros_2.10-*.jar)"
+KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/protocol_2.10-*.jar)"
 
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/play*)"
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/slf4j-log4j*)"
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/log4j*)"
-KERNEL_JARS="$KERNEL_JARS ${PROG_HOME}/lib/jopt-simple-4.6.jar"
-KERNEL_JARS="$KERNEL_JARS ${PROG_HOME}/lib/jeromq-0.3.4.jar"
+KERNEL_JARS="$KERNEL_JARS ${PROG_HOME}/lib/jopt-simple-*.jar"
+KERNEL_JARS="$KERNEL_JARS ${PROG_HOME}/lib/jeromq-*.jar"
 
 
 KERNEL_CLASSPATH=$(echo "$KERNEL_JARS" | sed 's/ /:/g')
