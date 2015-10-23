@@ -25,6 +25,13 @@ If you are on an edge node, copy the hadoop configuration file dse-core-defaults
 
     ipython notebook
 
+Some Useful options
+
+1. `--no-browser` - avoid the browser from popping up
+2. `--ip 0.0.0.0` - listen on all interfaces instead of just localhost
+3. `--port <portno>` - listen on a different port.  (The default is 8888)
+
+
 In the browser - create a new spark notebook
 
 ![image](https://cloud.githubusercontent.com/assets/2955904/9398338/fe850f02-475a-11e5-9fea-86bfcdbfbbad.png)
@@ -35,11 +42,10 @@ In the browser - create a new spark notebook
 
 If you don't get output, try adding a .toString on the end. There seems to be a bug rendering some types.
 
-### Running CQL Statements with the %%Cql Magic
+## Special features of the Scala Kernel
 
-Simply prefix your CQL Statement with %%Cql in its own cell
-
-
+1. `%%cql <cql statement>`   Run a CQL statement and display the output
+2. `%%showschema [<keyspace>][.<table>]` - Display all or part of the schema
 
 
 [![Build Status][build-badge]][build-url]
