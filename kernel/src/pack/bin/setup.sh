@@ -33,11 +33,12 @@ PYSPARKCLUSTER="$JUPYTER_CONFIGS/pyspark-dse-cluster"
 ## File resource doesn't work correctly here because it writes a byte-order mark on the file
 ## and python can't then parse it
 
-mkdir -p $SPARKLOCAL
 
 ## File resource doesn't work correctly here because it writes a byte-order mark on the file
 ## and python can't then parse it
 
+mkdir -p $SPARKLOCAL
+echo "Creating file $SPARKLOCAL/kernel.json"
 cat >$SPARKLOCAL/kernel.json <<EOF
 {
     "display_name": "Spark-DSE Local (Scala 2.10.4)",
@@ -54,7 +55,7 @@ cat >$SPARKLOCAL/kernel.json <<EOF
 EOF
 
 mkdir -p $SPARKCLUSTER
-
+echo "Creating file $SPARKCLUSTER/kernel.json"
 cat <<EOF >$SPARKCLUSTER/kernel.json
 {
     "display_name": "Spark-DSE Cluster (Scala 2.10.4)",
@@ -75,7 +76,7 @@ cat <<EOF >$SPARKCLUSTER/kernel.json
 EOF
 
 mkdir -p $PYSPARKLOCAL
-
+echo "Creating file $PYSPARKLOCAL/kernel.json"
 cat <<EOF >$PYSPARKLOCAL/kernel.json
 {
  "display_name": "Pyspark DSE Local",
@@ -88,7 +89,7 @@ cat <<EOF >$PYSPARKLOCAL/kernel.json
 EOF
 
 mkdir -p $PYSPARKCLUSTER
-
+echo "Creating file $PYSPARKCLUSTER/kernel.json"
 cat <<EOF >$PYSPARKCLUSTER/kernel.json
 {
  "display_name": "Pyspark DSE Cluster",
