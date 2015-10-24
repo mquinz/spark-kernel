@@ -1,0 +1,11 @@
+To Build everything
+
+sbt clean pack packArchive
+
+By default this will build a -SNAPSHOT version
+
+to build a release version, first
+
+export IS_SNAPSHOT=false
+
+
