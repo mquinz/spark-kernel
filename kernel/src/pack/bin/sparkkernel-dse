@@ -145,8 +145,8 @@ KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/protocol_2.10-*.jar)"
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/play*)"
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/slf4j-log4j*)"
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/log4j*)"
-KERNEL_JARS="$KERNEL_JARS ${PROG_HOME}/lib/jopt-simple-*.jar"
-KERNEL_JARS="$KERNEL_JARS ${PROG_HOME}/lib/jeromq-*.jar"
+KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/jopt-simple-*.jar)"
+KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/jeromq-*.jar)"
 
 
 KERNEL_CLASSPATH=$(echo "$KERNEL_JARS" | sed 's/ /:/g')
