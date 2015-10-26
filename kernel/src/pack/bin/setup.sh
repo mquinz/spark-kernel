@@ -16,6 +16,10 @@ if [ "$1" == "" ] ; then
 else
   CLUSTER_HOSTNAME=$1
   MASTER=spark://$CLUSTER_HOSTNAME:7077
+
+  if [ "$2" != "" ]; then       # We have a SPARK_PUBLIC_DNS 
+     EXTRA_ENV="\"env\": { \"SPARK_PUBLIC_DNS\": \"$2\" },"
+  fi
 fi
 
 if [ "$MASTER" == "" ]; then
@@ -60,6 +64,7 @@ cat <<EOF >$SPARKCLUSTER/kernel.json
 {
     "display_name": "Spark-DSE Cluster (Scala 2.10.4)",
     "language": "scala",
+    $EXTRA_ENV
     "argv": [
         "$SPARKKERNEL/bin/sparkkernel-dse",
         "--profile",
