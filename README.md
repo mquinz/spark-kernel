@@ -17,7 +17,7 @@ Obviously you need python 2.7.  Install these python packages
 
 1. Unpack the tarball downloaded from http://github.com/slowenthal/spark-kernel/releases
 2. in the tarball, navigate to the bin directory
-3. Run setup.sh <ip address for spark master>.   If your spark master is 127.0.0.1, you can leave out the ip address.
+3. Run `setup.sh [<ip address for spark master> [<spark public dns ip>]]`.  *ie. If your spark master is 127.0.0.1, you can leave out the ip addresses.*
 
 If you are on an edge node, copy the hadoop configuration file dse-core-defaults.xml from a node in your cluster to your local DSE directories.
 
