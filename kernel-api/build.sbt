@@ -45,15 +45,15 @@ libraryDependencies ++= Seq(
 // TODO: Mark these as provided and bring them in via the kernel project
 //       so users wanting to implement a magic do not bring in Spark itself
 libraryDependencies ++= Seq(
-  "org.apache.spark" %% "spark-core" % sparkVersion.value excludeAll // Apache v2
+  "org.apache.spark" %% "spark-core" % sparkVersion.value % "provided" excludeAll // Apache v2
     ExclusionRule(organization = "org.apache.hadoop"),
-  "org.apache.spark" %% "spark-streaming" % sparkVersion.value,      // Apache v2
-  "org.apache.spark" %% "spark-sql" % sparkVersion.value,            // Apache v2
-  "org.apache.spark" %% "spark-mllib" % sparkVersion.value,          // Apache v2
-  "org.apache.spark" %% "spark-graphx" % sparkVersion.value,         // Apache v2
-  "org.apache.spark" %% "spark-repl" % sparkVersion.value excludeAll // Apache v2
+  "org.apache.spark" %% "spark-streaming" % sparkVersion.value % "provided",      // Apache v2
+  "org.apache.spark" %% "spark-sql" % sparkVersion.value % "provided",            // Apache v2
+  "org.apache.spark" %% "spark-mllib" % sparkVersion.value % "provided",          // Apache v2
+  "org.apache.spark" %% "spark-graphx" % sparkVersion.value % "provided",         // Apache v2
+  "org.apache.spark" %% "spark-repl" % sparkVersion.value % "provided" excludeAll // Apache v2
     ExclusionRule(organization = "org.apache.hadoop"),
-  "com.datastax.spark" %% "spark-cassandra-connector" % "1.4.0" excludeAll // SPARK-CASSANDRA CONNECTOR DEPENDENCIES
+  "com.datastax.spark" %% "spark-cassandra-connector" % "1.4.0" % "provided" excludeAll // SPARK-CASSANDRA CONNECTOR DEPENDENCIES
     ExclusionRule(organization = "org.apache.hadoop")
 )
 
