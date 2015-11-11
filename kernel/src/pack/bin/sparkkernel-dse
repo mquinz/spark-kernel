@@ -136,7 +136,7 @@ PROG_VERSION=0.1.4.3-cassandra
 
 # OPTIMIZE THE CLASSPATH for DSE
 
-KERNEL_JARS=$(echo ${PROG_HOME}/lib/communication_2.10-${PROG_VERSION}.jar)
+KERNEL_JARS=$(echo ${PROG_HOME}/lib/communication_2.10-*.jar)
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/kernel-api_2.10-*.jar)"
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/kernel_2.10-*.jar)"
 KERNEL_JARS="$KERNEL_JARS $(echo ${PROG_HOME}/lib/macros_2.10-*.jar)"
