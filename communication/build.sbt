@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+test in assembly := {}
+
 libraryDependencies ++= Seq(
   // LGPL with static linking exception
   "org.zeromq"        % "jeromq"        % "0.3.4",

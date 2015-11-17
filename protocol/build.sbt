@@ -14,6 +14,9 @@ import xerial.sbt.Pack._
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+test in assembly := {}
+
 pack <<= pack dependsOn compile
 
 resolvers += "Typesafe repository" at "http://repo.typesafe.com/typesafe/releases/"

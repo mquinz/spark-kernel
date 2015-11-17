@@ -14,6 +14,9 @@
  *  limitations under the License.
  */
 // Do not export a jar for this or publish anything (should serve just as a pre-processor)
+
+test in assembly := {}
+
 libraryDependencies += "org.scala-lang" % "scala-reflect" % scalaVersion.value
 
 libraryDependencies ++= (

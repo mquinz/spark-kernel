@@ -14,6 +14,9 @@
  * limitations under the License.
  */
 // Update compiler options to allow reflective calls
+
+test in assembly := {}
+
 scalacOptions += "-language:reflectiveCalls"
 
 // Main library dependencies to function

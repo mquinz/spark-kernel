@@ -15,6 +15,9 @@ import xerial.sbt.Pack._
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+test in assembly := {}
+
 pack <<= pack dependsOn (rebuildIvyXml dependsOn deliverLocal)
 
 packArchive <<= packArchive dependsOn (rebuildIvyXml dependsOn deliverLocal)
@@ -22,8 +25,27 @@ packArchive <<= packArchive dependsOn (rebuildIvyXml dependsOn deliverLocal)
 //
 // TEST DEPENDENCIES
 //
-libraryDependencies +=
-  "org.spark-project.akka" %% "akka-testkit" % "2.3.4-spark" % "test" // MIT
+//libraryDependencies +=
+
+libraryDependencies ++= Seq(
+  "org.spark-project.akka" %% "akka-testkit" % "2.3.4-spark" % "test", // MIT
+  "org.apache.spark" %% "spark-core" % sparkVersion.value % "provided" excludeAll // Apache v2
+    ExclusionRule(organization = "org.apache.hadoop"),
+  "org.apache.spark" %% "spark-streaming" % sparkVersion.value % "provided",      // Apache v2
+  "org.apache.spark" %% "spark-sql" % sparkVersion.value % "provided",            // Apache v2
+  "org.apache.spark" %% "spark-mllib" % sparkVersion.value % "provided",          // Apache v2
+  "org.apache.spark" %% "spark-graphx" % sparkVersion.value % "provided",         // Apache v2
+  "org.apache.spark" %% "spark-repl" % sparkVersion.value % "provided" excludeAll // Apache v2
+    ExclusionRule(organization = "org.apache.hadoop"),
+  "com.datastax.spark" %% "spark-cassandra-connector" % "1.4.0" % "provided" excludeAll // SPARK-CASSANDRA CONNECTOR DEPENDENCIES
+    ExclusionRule(organization = "org.apache.hadoop"),
+  "org.apache.hadoop" % "hadoop-client" % "2.3.0" % "provided" excludeAll
+    ExclusionRule(organization = "javax.servlet")
+)
+
+//We do this so that Spark Dependencies will not be bundled with our fat jar but will still be included on the classpath
+//When we do a sbt/run
+run in Compile <<= Defaults.runTask(fullClasspath in Compile, mainClass in (Compile, run), runner in (Compile, run))
 
 
 //

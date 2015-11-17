@@ -16,6 +16,9 @@ import Common._
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
+test in assembly := {}
+
 pack <<= pack dependsOn compile
 
 //
@@ -61,7 +64,7 @@ libraryDependencies ++= Seq(
 // HADOOP DEPENDENCIES
 //
 libraryDependencies ++= Seq(
-  "org.apache.hadoop" % "hadoop-client" % "2.3.0" excludeAll
+  "org.apache.hadoop" % "hadoop-client" % "2.3.0" % "provided" excludeAll
     ExclusionRule(organization = "javax.servlet")
 )
 
