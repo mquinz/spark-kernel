@@ -32,7 +32,6 @@ import scala.tools.nsc.backend.JavaPlatform
 import scala.tools.nsc.interpreter._
 import scala.tools.nsc.io.AbstractFile
 import scala.tools.nsc.util.MergedClassPath
-
 import scala.util.{Try => UtilTry}
 
 import scala.language.reflectiveCalls
@@ -58,12 +57,28 @@ class ScalaInterpreter(
       def addJar(url: URL) = this.addURL(url)
     }
 
-  /* Add scala.runtime libraries to interpreter classpath */ {
-    val urls = _thisClassloader match {
-      case cl: java.net.URLClassLoader => cl.getURLs.toList
-      case a => // TODO: Should we really be using sys.error here?
-        sys.error("[SparkInterpreter] Unexpected class loader: " + a.getClass)
-    }
+  {
+
+    // collect urls from the the URLClassloaders until we get one that isn't a URL classloader
+    def getURLsFromClassloaderChain (cl: ClassLoader):List[URL] =
+      cl match {
+        case l: java.net.URLClassLoader => l.getURLs.toList ::: getURLsFromClassloaderChain(l.getParent)
+        case _ => Nil
+      }
+    val urls = getURLsFromClassloaderChain(_thisClassloader)
+
+    //  /* Add scala.runtime libraries to interpreter classpath */ {
+    //    val urls = _thisClassloader match {
+    //      case cl: java.net.URLClassLoader => {
+    //        val pl = cl.getParent
+    //        val pllist = pl match {
+    //          case xl: java.net.URLClassLoader => xl.getURLs.toList
+    //        }
+    //
+    //        cl.getURLs.toList ++ pllist   }
+    //      case a => // TODO: Should we really be using sys.error here?
+    //        sys.error("[SparkInterpreter] Unexpected class loader: " + a.getClass)
+    //    }
     val classpath = urls.map(_.toString)
 
     settings.classpath.value =
