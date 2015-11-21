@@ -33,7 +33,9 @@ import com.ibm.spark.magic.dependencies.DependencyMap
 import com.ibm.spark.utils.{MultiClassLoader, TaskManager, KeyValuePairUtils, LogLike}
 import com.typesafe.config.Config
 import com.datastax.spark.connector._
+import org.apache.spark.sql.SQLContext
 import org.apache.spark.{SparkContext, SparkConf}
+import org.apache.spark.sql.hive.HiveContext
 
 import scala.collection.JavaConverters._
 
@@ -63,6 +65,7 @@ trait ComponentInitialization {
  */
 trait StandardComponentInitialization extends ComponentInitialization {
   this: LogLike =>
+
 
   /**
    * Initializes and registers all components (not needed by bare init).
@@ -167,8 +170,9 @@ trait StandardComponentInitialization extends ComponentInitialization {
       config, actorLoader, KMBuilder(), conf
     )
 
-    updateInterpreterWithSparkContext(
-      config, sparkContext, interpreter)
+    val sqlContext = new HiveContext(sparkContext)
+
+    updateInterpreterWithSparkContext(config, sparkContext, sqlContext, interpreter = interpreter)
 
     sparkContext
   }
@@ -197,14 +201,15 @@ trait StandardComponentInitialization extends ComponentInitialization {
   }
 
   // TODO: Think of a better way to test without exposing this
-  protected[layer] def updateInterpreterWithSparkContext(
-    config: Config, sparkContext: SparkContext, interpreter: Interpreter
-  ) = {
+  protected[layer] def updateInterpreterWithSparkContext(config: Config, sparkContext: SparkContext, sqlContext: HiveContext, interpreter: Interpreter) = {
     interpreter.doQuietly {
       logger.debug("Binding context into interpreter")
       interpreter.bind(
         "sc", "org.apache.spark.SparkContext",
         sparkContext, List( """@transient"""))
+      interpreter.bind(
+        "sqlContext", "org.apache.spark.sql.hive.HiveContext",
+        sqlContext, List( """@transient"""))
 
       // NOTE: This is needed because interpreter blows up after adding
       //       dependencies to SparkContext and Interpreter before the

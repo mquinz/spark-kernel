@@ -23,6 +23,7 @@ import com.ibm.spark.kernel.protocol.v5.kernel.ActorLoader
 import com.ibm.spark.utils.LogLike
 import com.typesafe.config.Config
 import com.datastax.spark.connector._
+import org.apache.spark.sql.hive.HiveContext
 import org.apache.spark.{SparkConf, SparkContext}
 import org.mockito.ArgumentCaptor
 import org.mockito.Matchers._
@@ -39,6 +40,7 @@ class StandardComponentInitializationSpec extends FunSpec with Matchers
   private var mockActorLoader: ActorLoader = _
   private var mockSparkContext: SparkContext = _
   private var mockInterpreter: Interpreter = _
+  private var mockHiveContext: HiveContext = _
   private var spyComponentInitialization: StandardComponentInitialization = _
 
   private class TestComponentInitialization
@@ -67,7 +69,7 @@ class StandardComponentInitializationSpec extends FunSpec with Matchers
             any[Config], any[ActorLoader], any[KMBuilder], any[SparkConf])
         doNothing().when(spyComponentInitialization)
           .updateInterpreterWithSparkContext(
-            any[Config], any[SparkContext], any[Interpreter])
+            any[Config], any[SparkContext], any[HiveContext], any[Interpreter])
 
         // Provide stub for interpreter classServerURI since also executed
         doReturn("").when(mockInterpreter).classServerURI
@@ -91,7 +93,7 @@ class StandardComponentInitializationSpec extends FunSpec with Matchers
         doReturn("local[*]").when(mockConfig).getString("spark.master")
 
         spyComponentInitialization.updateInterpreterWithSparkContext(
-          mockConfig, mockSparkContext, mockInterpreter)
+          mockConfig, mockSparkContext, mockHiveContext, mockInterpreter)
         verify(mockSparkContext, never()).addJar(anyString())
       }
 
@@ -105,7 +107,7 @@ class StandardComponentInitializationSpec extends FunSpec with Matchers
             .getCodeSource.getLocation.getPath
 
         spyComponentInitialization.updateInterpreterWithSparkContext(
-          mockConfig, mockSparkContext, mockInterpreter)
+          mockConfig, mockSparkContext, mockHiveContext, mockInterpreter)
         verify(mockSparkContext).addJar(expected)
       }
     }

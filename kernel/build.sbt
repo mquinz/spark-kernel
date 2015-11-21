@@ -37,6 +37,8 @@ libraryDependencies ++= Seq(
   "org.apache.spark" %% "spark-graphx" % sparkVersion.value % "provided",         // Apache v2
   "org.apache.spark" %% "spark-repl" % sparkVersion.value % "provided" excludeAll // Apache v2
     ExclusionRule(organization = "org.apache.hadoop"),
+  "org.apache.spark" %% "spark-hive" % sparkVersion.value % "provided" excludeAll // Apache v2
+    ExclusionRule(organization = "org.apache.hadoop"),
   "com.datastax.spark" %% "spark-cassandra-connector" % "1.4.0" % "provided" excludeAll // SPARK-CASSANDRA CONNECTOR DEPENDENCIES
     ExclusionRule(organization = "org.apache.hadoop"),
   "org.apache.hadoop" % "hadoop-client" % "2.3.0" % "provided" excludeAll
