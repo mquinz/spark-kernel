@@ -65,20 +65,8 @@ class ScalaInterpreter(
         case l: java.net.URLClassLoader => l.getURLs.toList ::: getURLsFromClassloaderChain(l.getParent)
         case _ => Nil
       }
-    val urls = getURLsFromClassloaderChain(_thisClassloader)
 
-    //  /* Add scala.runtime libraries to interpreter classpath */ {
-    //    val urls = _thisClassloader match {
-    //      case cl: java.net.URLClassLoader => {
-    //        val pl = cl.getParent
-    //        val pllist = pl match {
-    //          case xl: java.net.URLClassLoader => xl.getURLs.toList
-    //        }
-    //
-    //        cl.getURLs.toList ++ pllist   }
-    //      case a => // TODO: Should we really be using sys.error here?
-    //        sys.error("[SparkInterpreter] Unexpected class loader: " + a.getClass)
-    //    }
+    val urls = getURLsFromClassloaderChain(_thisClassloader)
     val classpath = urls.map(_.toString)
 
     settings.classpath.value =
