@@ -18,6 +18,10 @@ import xerial.sbt.Pack._
 
 test in assembly := {}
 
+// Don't package the scala jars as they are already in spark
+assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)
+
+
 pack <<= pack dependsOn (rebuildIvyXml dependsOn deliverLocal)
 
 packArchive <<= packArchive dependsOn (rebuildIvyXml dependsOn deliverLocal)
