@@ -1,4 +1,5 @@
 import Common._
+import com.typesafe.sbt.SbtNativePackager.packageArchetype
 import xerial.sbt.Pack._
 /*
  * Copyright 2014 IBM Corp.
@@ -16,15 +17,30 @@ import xerial.sbt.Pack._
  * limitations under the License.
  */
 
+// the assembly settings
+
+// using the java server for this application. java_application would be fine, too
+
+// removes all jar mappings in universal and appends the fat jar
+
+
 test in assembly := {}
 
 // Don't package the scala jars as they are already in spark
 assemblyOption in assembly := (assemblyOption in assembly).value.copy(includeScala = false)
 
+packageArchetype.java_application
 
-pack <<= pack dependsOn (rebuildIvyXml dependsOn deliverLocal)
+mappings in Universal <<= (mappings in Universal, assembly in Compile) map { (mappings, fatJar) =>
+  val filtered = mappings filter { case (file, name) =>  ! name.endsWith(".jar") }
+  filtered :+ (fatJar -> ("lib/" + fatJar.getName))
+}
 
-packArchive <<= packArchive dependsOn (rebuildIvyXml dependsOn deliverLocal)
+
+
+//pack <<= pack dependsOn (assembly dependsOn (rebuildIvyXml dependsOn deliverLocal))
+//
+//packArchive <<= packArchive dependsOn (rebuildIvyXml dependsOn deliverLocal)
 
 //
 // TEST DEPENDENCIES

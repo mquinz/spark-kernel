@@ -31,7 +31,7 @@ addSbtPlugin("net.virtual-void" % "sbt-dependency-graph" % "0.7.4")
 
 // Provides ability to create a pack containing all jars and a script to run them
 // using `sbt pack` or `sbt pack-archive` to generate a *.tar.gz file
-addSbtPlugin("org.xerial.sbt" % "sbt-pack" % "0.6.1")
+addSbtPlugin("org.xerial.sbt" % "sbt-pack" % "0.7.7")
 
 //  Provides the ability to package our project as a docker image
 addSbtPlugin("se.marcuslonnberg" % "sbt-docker" % "0.5.2")
@@ -52,3 +52,6 @@ addSbtPlugin("com.typesafe.sbt" % "sbt-site" % "0.8.1")
 addSbtPlugin("com.typesafe.sbt" % "sbt-ghpages" % "0.5.3")
 
 addSbtPlugin("com.eed3si9n" % "sbt-assembly" % "0.14.0")
+
+addSbtPlugin("com.typesafe.sbt" % "sbt-native-packager" % "1.0.3")
+

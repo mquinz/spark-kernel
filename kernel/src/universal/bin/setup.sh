@@ -3,6 +3,8 @@
 
 SPARKKERNEL="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
+ASSEMBLYJAR=$(echo $SPARKKERNEL/lib/kernel-assembly-*.jar)
+
 SPARK_HOME=`echo 'import os; print os.environ["SPARK_HOME"]' | dse pyspark`
 
 if [ `uname` == "Darwin" ]; then
@@ -11,18 +13,11 @@ else
   JUPYTER_CONFIGS=$HOME/.local/share/jupyter/kernels
 fi
 
-if [ "$1" == "" ] ; then
-  CLUSTER_HOSTNAME=127.0.0.1
-else
-  CLUSTER_HOSTNAME=$1
-  MASTER=spark://$CLUSTER_HOSTNAME:7077
-
-  if [ "$2" != "" ]; then       # We have a SPARK_PUBLIC_DNS 
-     EXTRA_ENV="\"env\": { \"SPARK_PUBLIC_DNS\": \"$2\" },"
-  fi
+if [ -n "$1" ] ; then
+  MASTER=spark://$1:7077
 fi
 
-if [ "$MASTER" == "" ]; then
+if [ -z "$MASTER" ]; then
    MASTER=spark://127.0.0.1:7077
 fi
 
@@ -45,14 +40,17 @@ mkdir -p $SPARKLOCAL
 echo "Creating file $SPARKLOCAL/kernel.json"
 cat >$SPARKLOCAL/kernel.json <<EOF
 {
-    "display_name": "Spark-DSE Local (Scala 2.10.4)",
+    "display_name": "Spark-DSE Local",
     "language": "scala",
     "argv": [
-        "$SPARKKERNEL/bin/sparkkernel-dse",
+        "dse",
+        "spark-submit",
+        "--master",
+        "local[*]",
+        "$ASSEMBLYJAR",
+        "com.ibm.spark.SparkKernel",
         "--profile",
-        "{connection_file}",
-        "--spark-configuration",
-        "spark.cassandra.connection.host=$CLUSTER_HOSTNAME"
+        "{connection_file}"
      ],
      "codemirror_mode": "scala"
 }
@@ -62,19 +60,17 @@ mkdir -p $SPARKCLUSTER
 echo "Creating file $SPARKCLUSTER/kernel.json"
 cat <<EOF >$SPARKCLUSTER/kernel.json
 {
-    "display_name": "Spark-DSE Cluster (Scala 2.10.4)",
+    "display_name": "Spark-DSE Cluster",
     "language": "scala",
-    $EXTRA_ENV
     "argv": [
-        "$SPARKKERNEL/bin/sparkkernel-dse",
+        "dse",
+        "spark-submit",
+        "--master",
+        "$MASTER",
+        "$ASSEMBLYJAR",
+        "com.ibm.spark.SparkKernel",
         "--profile",
-        "{connection_file}",
-        "--spark-configuration",
-        "spark.cassandra.connection.host=$CLUSTER_HOSTNAME",
-        "--spark-configuration",
-        "spark.executor.memory=2g",
-        "-master",
-        "$MASTER"
+        "{connection_file}"
      ],
      "codemirror_mode": "scala"
 }

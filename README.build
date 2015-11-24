@@ -1,6 +1,6 @@
 To Build everything
 
-sbt clean pack packArchive
+sbt clean stage universal:packageZipTarball
 
 By default this will build a -SNAPSHOT version
 
