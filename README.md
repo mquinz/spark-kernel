@@ -17,7 +17,7 @@ Obviously you need python 2.7.  Install these python packages
 
 1. Unpack the tarball downloaded from http://github.com/slowenthal/spark-kernel/releases
 2. in the tarball, navigate to the bin directory
-3. Run `setup.sh [<ip address for spark master> [<spark public dns ip>]]`.  *ie. If your spark master is 127.0.0.1, you can leave out the ip addresses.*
+3. Run `setup.sh [<ip address for spark master>]`. If your spark master is 127.0.0.1, you can leave out the ip addresses.*
 
 If you are on an edge node, copy the hadoop configuration file dse-core-defaults.xml from a node in your cluster to your local DSE directories.
 
@@ -40,7 +40,6 @@ In the browser - create a new spark notebook
 
 ![image](https://cloud.githubusercontent.com/assets/2955904/9398374/60c4bef6-475b-11e5-8eca-62add0d38763.png)
 
-If you don't get output, try adding a .toString on the end. There seems to be a bug rendering some types.
 
 ## Special features of the Scala Kernel
 
