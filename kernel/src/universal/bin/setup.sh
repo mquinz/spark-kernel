@@ -13,14 +13,6 @@ else
   JUPYTER_CONFIGS=$HOME/.local/share/jupyter/kernels
 fi
 
-if [ -n "$1" ] ; then
-  MASTER=spark://$1:7077
-fi
-
-if [ -z "$MASTER" ]; then
-   MASTER=spark://127.0.0.1:7077
-fi
-
 PY4J=$(ls $SPARK_HOME/python/lib/py4j*.zip)
 
 SPARKLOCAL="$JUPYTER_CONFIGS/spark-dse-local"
@@ -65,8 +57,6 @@ cat <<EOF >$SPARKCLUSTER/kernel.json
     "argv": [
         "dse",
         "spark-submit",
-        "--master",
-        "$MASTER",
         "$ASSEMBLYJAR",
         "com.ibm.spark.SparkKernel",
         "--profile",
