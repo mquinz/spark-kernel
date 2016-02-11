@@ -35,7 +35,7 @@ object Common {
   private val buildVersion      =
     if (snapshot) s"$versionNumber-SNAPSHOT"
     else versionNumber
-  private val buildScalaVersion = "2.10.4"
+  private val buildScalaVersion = "2.10.3"
   private val buildSbtVersion   = "0.13.7"
 
   // Global dependencies provided to all projects
