@@ -285,8 +285,11 @@ class ScalaInterpreter() extends Interpreter {
   }
 
   protected def interpretRec(lines: List[String], silent: Boolean = false, results: (Results.Result, Either[ExecuteOutput, ExecuteFailure])): (Results.Result, Either[ExecuteOutput, ExecuteFailure]) = {
+    val ShouldContinue = "\\s*((?:[,\\.;#\\[\\)\\]}]|:=|>:|<%|=>|<-|<:|catch|else|extends|finally|forSome|match|with|yield).*)".r
+
     lines match {
       case Nil => results
+      case x :: ShouldContinue(y) :: xs => interpretRec(x + "\n" + y :: xs, silent, results)
       case x :: xs =>
         val output = interpretLine(x)
 
