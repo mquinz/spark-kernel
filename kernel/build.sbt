@@ -62,7 +62,8 @@ libraryDependencies ++= Seq(
   "com.datastax.spark" %% "spark-cassandra-connector" % "1.5.0-M3" % "provided" excludeAll // SPARK-CASSANDRA CONNECTOR DEPENDENCIES
     ExclusionRule(organization = "org.apache.hadoop"),
   "org.apache.hadoop" % "hadoop-client" % "2.3.0" % "provided" excludeAll
-    ExclusionRule(organization = "javax.servlet")
+    ExclusionRule(organization = "javax.servlet"),
+  "com.databricks" % "spark-csv_2.10" % "1.3.0"
 )
 
 //We do this so that Spark Dependencies will not be bundled with our fat jar but will still be included on the classpath
