@@ -22,6 +22,7 @@ import com.ibm.spark.interpreter.Interpreter
 import com.ibm.spark.kernel.api.KernelLike
 import com.ibm.spark.magic.{MagicLoader, Magic}
 import org.apache.spark.SparkContext
+import org.apache.spark.sql.SQLContext
 
 import scala.reflect.runtime.universe._
 import com.ibm.spark.dependencies.DependencyDownloader
@@ -68,11 +69,12 @@ class DependencyMap {
    * Sets the SparkContext for this map.
    * @param sparkContext The new SparkContext
    */
-  def setSparkContext(sparkContext: SparkContext) = {
+  def setSparkContext(sparkContext: SparkContext, sqlContext: SQLContext) = {
     internalMap(typeOf[IncludeSparkContext]) =
       PartialFunction[Magic, Unit](
         magic =>
-          magic.asInstanceOf[IncludeSparkContext].sparkContext_=(sparkContext)
+        {magic.asInstanceOf[IncludeSparkContext].sparkContext_=(sparkContext)
+          magic.asInstanceOf[IncludeSparkContext].sqlContext_=(sqlContext) }
       )
 
     this
