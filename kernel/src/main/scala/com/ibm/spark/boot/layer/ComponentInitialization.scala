@@ -80,11 +80,9 @@ trait StandardComponentInitialization extends ComponentInitialization {
     val (commStorage, commRegistrar, commManager) =
       initializeCommObjects(actorLoader)
     val interpreter = initializeInterpreter(config)
-    val sparkContext = initializeSparkContext(
-      config, appName, actorLoader, interpreter)
+    val (sparkContext,sqlContext) = initializeSparkContext(config, appName, actorLoader, interpreter)
     val dependencyDownloader = initializeDependencyDownloader(config)
-    val magicLoader = initializeMagicLoader(
-      config, interpreter, sparkContext, dependencyDownloader)
+    val magicLoader = initializeMagicLoader(config, interpreter, sparkContext, sqlContext, dependencyDownloader = dependencyDownloader)
     val kernel = initializeKernel(
       config, actorLoader, interpreter, commManager, magicLoader
     )
@@ -137,10 +135,10 @@ trait StandardComponentInitialization extends ComponentInitialization {
   }
 
   // TODO: Think of a better way to test without exposing this
-  protected[layer] def initializeSparkContext(
+  protected def initializeSparkContext(
     config: Config, appName: String, actorLoader: ActorLoader,
     interpreter: Interpreter
-  ) = {
+  ): (SparkContext, SQLContext) = {
     logger.debug("Creating Spark Configuration")
     val conf = new SparkConf()
 
@@ -174,7 +172,7 @@ trait StandardComponentInitialization extends ComponentInitialization {
 
     updateInterpreterWithSparkContext(config, sparkContext, sqlContext, interpreter = interpreter)
 
-    sparkContext
+    (sparkContext,sqlContext)
   }
 
   // TODO: Think of a better way to test without exposing this
@@ -296,17 +294,14 @@ trait StandardComponentInitialization extends ComponentInitialization {
     kernel
   }
 
-  private def initializeMagicLoader(
-    config: Config, interpreter: Interpreter, sparkContext: SparkContext,
-    dependencyDownloader: DependencyDownloader
-  ) = {
+  private def initializeMagicLoader(config: Config, interpreter: Interpreter, sparkContext: SparkContext, sqlContext: SQLContext, dependencyDownloader: DependencyDownloader) = {
     logger.debug("Constructing magic loader")
 
     logger.debug("Building dependency map")
     val dependencyMap = new DependencyMap()
       .setInterpreter(interpreter)
       .setKernelInterpreter(interpreter) // This is deprecated
-      .setSparkContext(sparkContext)
+      .setSparkContext(sparkContext, sqlContext)
       .setDependencyDownloader(dependencyDownloader)
 
     logger.debug("Creating BuiltinLoader")

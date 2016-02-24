@@ -74,8 +74,7 @@ class StandardComponentInitializationSpec extends FunSpec with Matchers
         // Provide stub for interpreter classServerURI since also executed
         doReturn("").when(mockInterpreter).classServerURI
 
-        val sparkContext = spyComponentInitialization.initializeSparkContext(
-          mockConfig, TestAppName, mockActorLoader, mockInterpreter)
+        val sparkContext = spyComponentInitialization.initializeSparkContext(mockConfig, TestAppName, mockActorLoader, mockInterpreter)
 
         val sparkConf = {
           val sparkConfCaptor = ArgumentCaptor.forClass(classOf[SparkConf])

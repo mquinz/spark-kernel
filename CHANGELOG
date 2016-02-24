@@ -1,5 +1,9 @@
 
-1.4.0.4-cassandra
+0.1.4.5-cassandra
+Statements can properly span lines
+Add Databricks CSV Dataframe library
+
+0.1.4.4-cassandra
 Build a small assembly-jar.  Leave out most jars provided by DSE
 Use universal packager
 Execute the kernel using dse spark-submit so it picks up all of the settings in spark-defaults.conf

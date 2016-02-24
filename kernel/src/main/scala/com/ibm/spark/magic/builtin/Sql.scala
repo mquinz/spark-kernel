@@ -16,22 +16,16 @@
 
 package com.ibm.spark.magic.builtin
 
-import org.apache.spark.SparkConf
-import com.datastax.spark.connector.cql.CassandraConnector
-import scala.collection.JavaConversions._
-
 import java.io.PrintStream
 
 import com.google.common.base.Strings
 import com.ibm.spark.kernel.protocol.v5.MIMEType
 import com.ibm.spark.magic._
-import com.ibm.spark.magic.dependencies.{IncludeSparkContext, IncludeOutputStream}
+import com.ibm.spark.magic.dependencies.{IncludeOutputStream, IncludeSparkContext}
 import com.ibm.spark.utils.ArgumentParsingSupport
-import com.ibm.spark.magic.builtin.CqlHelper._
 
 
-
-class Cql extends CellMagic with ArgumentParsingSupport
+class Sql extends CellMagic with ArgumentParsingSupport
 with IncludeOutputStream with IncludeSparkContext {
 
   // Lazy because the outputStream is not provided at construction
@@ -39,29 +33,28 @@ with IncludeOutputStream with IncludeSparkContext {
 
   override def execute(code: String): CellMagicOutput = {
     def printHelpAndReturn: CellMagicOutput = {
-      printHelp(printStream, """%%cql <cql statement>""")
+      printHelp(printStream, """%%sql <cql statement>""")
       CellMagicOutput()
     }
 
     Strings.isNullOrEmpty(code) match {
       case true => printHelpAndReturn
-      case false => CellMagicOutput(MIMEType.TextHtml -> htmlFromCql(code))
+      case false => CellMagicOutput(MIMEType.TextHtml -> htmlFromSql(code))
     }
   }
 
-  def htmlFromCql(code: String) =  {
-    val connector = CassandraConnector(sparkContext.getConf)
+  def htmlFromSql(code: String) = {
+    val rows = sqlContext.sql(code)
 
-    "<table>" + connector.withSessionDo{
-      session => {val rows = session.execute(code)
-        val cols = rows.getColumnDefinitions
-        "<tr>" + (for (col <- cols) yield "<th>" + col.getName + "</th>" ).mkString + "</tr>" +
-          (for (row <- rows)
-            yield "<tr>"
-              + (for (col <- cols) yield "<td>" + row.getStringForCol(col) + "</td>").mkString
-              + "</tr>"
-            ).mkString
-      }
-    } + "</table>"
+    val types = rows.columns
+
+    val output = "<table><tr>" +
+      types.mkString("<th>","</th><th>","</th>") + "</tr>" +
+      rows.map("<tr>" + _.mkString("<td>", "</td><td>", "</td>") + "</tr>")
+        .collect().mkString +
+      "</table>"
+
+    output
+
   }
 }
