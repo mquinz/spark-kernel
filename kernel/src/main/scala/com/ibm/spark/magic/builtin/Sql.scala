@@ -48,11 +48,13 @@ with IncludeOutputStream with IncludeSparkContext {
 
     val types = rows.columns
 
-    "</table>" +
-      types.map("<tr>" + _ + "</th>").mkString +
+    val output = "<table><tr>" +
+      types.mkString("<th>","</th><th>","</th>") + "</tr>" +
       rows.map("<tr>" + _.mkString("<td>", "</td><td>", "</td>") + "</tr>")
         .collect().mkString +
       "</table>"
+
+    output
 
   }
 }

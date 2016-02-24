@@ -172,7 +172,7 @@ trait StandardComponentInitialization extends ComponentInitialization {
 
     updateInterpreterWithSparkContext(config, sparkContext, sqlContext, interpreter = interpreter)
 
-    sparkContext
+    (sparkContext,sqlContext)
   }
 
   // TODO: Think of a better way to test without exposing this
@@ -294,7 +294,7 @@ trait StandardComponentInitialization extends ComponentInitialization {
     kernel
   }
 
-  private def initializeMagicLoader(config: Config, interpreter: Interpreter, sparkContext: SparkContext, sqlContext: SQLContext =  , dependencyDownloader: DependencyDownloader) = {
+  private def initializeMagicLoader(config: Config, interpreter: Interpreter, sparkContext: SparkContext, sqlContext: SQLContext, dependencyDownloader: DependencyDownloader) = {
     logger.debug("Constructing magic loader")
 
     logger.debug("Building dependency map")

@@ -27,8 +27,12 @@ trait IncludeSparkContext {
   private var _sparkContext: SparkContext = _
   private var _sqlContext: SQLContext = _
   def sparkContext: SparkContext = _sparkContext
+
   def sqlContext: SQLContext = _sqlContext
 
   def sparkContext_=(newSparkContext: SparkContext) =
     _sparkContext = newSparkContext
+  
+  def sqlContext_=(newSqlContext: SQLContext) =
+    _sqlContext = newSqlContext
 }
