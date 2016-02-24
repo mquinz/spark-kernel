@@ -23,6 +23,7 @@ import com.ibm.spark.kernel.protocol.v5.MIMEType
 import com.ibm.spark.magic._
 import com.ibm.spark.magic.dependencies.{IncludeOutputStream, IncludeSparkContext}
 import com.ibm.spark.utils.ArgumentParsingSupport
+import CqlHelper.EscapableString
 
 
 class Sql extends CellMagic with ArgumentParsingSupport
@@ -50,7 +51,7 @@ with IncludeOutputStream with IncludeSparkContext {
 
     val output = "<table><tr>" +
       types.mkString("<th>","</th><th>","</th>") + "</tr>" +
-      rows.map("<tr>" + _.mkString("<td>", "</td><td>", "</td>") + "</tr>")
+      rows.map("<tr>" + _.toSeq.map(_.toString.escape).mkString("<td>", "</td><td>", "</td>") + "</tr>")
         .collect().mkString +
       "</table>"
 
