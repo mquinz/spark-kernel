@@ -51,7 +51,9 @@ with IncludeOutputStream with IncludeSparkContext {
 
     val output = "<table><tr>" +
       types.mkString("<th>","</th><th>","</th>") + "</tr>" +
-      rows.map("<tr>" + _.toSeq.map(_.toString.escape).mkString("<td>", "</td><td>", "</td>") + "</tr>")
+      rows.map("<tr>" + _.toSeq.map(_ match {
+        case null => "null"
+        case x => x.toString.escape}).mkString("<td>", "</td><td>", "</td>") + "</tr>")
         .collect().mkString +
       "</table>"
 
