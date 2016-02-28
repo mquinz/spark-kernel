@@ -48,13 +48,14 @@ with IncludeOutputStream with IncludeSparkContext {
     val rows = sqlContext.sql(code)
 
     val types = rows.columns
+    val rows2print = rows.take(100)
 
     val output = "<table><tr>" +
       types.mkString("<th>","</th><th>","</th>") + "</tr>" +
-      rows.map("<tr>" + _.toSeq.map(_ match {
+      rows2print.map("<tr>" + _.toSeq.map(_ match {
         case null => "null"
         case x => x.toString.escape}).mkString("<td>", "</td><td>", "</td>") + "</tr>")
-        .collect().mkString +
+          .mkString +
       "</table>"
 
     output
