@@ -53,7 +53,7 @@ object CqlHelper {
       val colName = colDef.getName
 
       if (row.isNull(colName))
-        "<null>"
+        "null"
       else
           row.getObject(colName).toString
     }.escape
