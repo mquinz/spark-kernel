@@ -23,7 +23,7 @@ If you are on an edge node, copy the hadoop configuration file dse-core-defaults
 
 ### To run it
 
-    ipython notebook
+    jupyter notebook
 
 Some Useful options
 
