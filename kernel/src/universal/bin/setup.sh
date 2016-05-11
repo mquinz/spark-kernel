@@ -5,7 +5,8 @@ SPARKKERNEL="$( cd "$( dirname "${BASH_SOURCE[0]}" )"/.. && pwd )"
 
 ASSEMBLYJAR=$(echo $SPARKKERNEL/lib/kernel-assembly-*.jar)
 
-SPARK_HOME=`echo 'import os; print os.environ["SPARK_HOME"]' | dse pyspark`
+# TODO - STEVE - fix pyspark for opensource
+# SPARK_HOME=`echo 'import os; print os.environ["SPARK_HOME"]' | dse pyspark`
 
 if [ `uname` == "Darwin" ]; then
   JUPYTER_CONFIGS=$HOME/Library/Jupyter/kernels
@@ -13,13 +14,13 @@ else
   JUPYTER_CONFIGS=$HOME/.local/share/jupyter/kernels
 fi
 
-PY4J=$(ls $SPARK_HOME/python/lib/py4j*.zip)
+# TODO - Steve - fix pyspark for opensource
+# PY4J=$(ls $SPARK_HOME/python/lib/py4j*.zip)  
 
 SPARKLOCAL="$JUPYTER_CONFIGS/spark-dse-local"
 SPARKCLUSTER="$JUPYTER_CONFIGS/spark-dse-cluster"
 PYSPARKLOCAL="$JUPYTER_CONFIGS/pyspark-dse-local"
 PYSPARKCLUSTER="$JUPYTER_CONFIGS/pyspark-dse-cluster"
-
 
 ## File resource doesn't work correctly here because it writes a byte-order mark on the file
 ## and python can't then parse it
@@ -35,10 +36,11 @@ cat >$SPARKLOCAL/kernel.json <<EOF
     "display_name": "Spark-DSE Local",
     "language": "scala",
     "argv": [
-        "dse",
         "spark-submit",
         "--master",
         "local[*]",
+        "--packages",
+        "datastax:spark-cassandra-connector:1.6.0-M2-s_2.10",
         "$ASSEMBLYJAR",
         "com.ibm.spark.SparkKernel",
         "--profile",
@@ -55,8 +57,9 @@ cat <<EOF >$SPARKCLUSTER/kernel.json
     "display_name": "Spark-DSE Cluster",
     "language": "scala",
     "argv": [
-        "dse",
         "spark-submit",
+        "--packages",
+        "datastax:spark-cassandra-connector:1.6.0-M2-s_2.10",
         "$ASSEMBLYJAR",
         "com.ibm.spark.SparkKernel",
         "--profile",
@@ -65,6 +68,9 @@ cat <<EOF >$SPARKCLUSTER/kernel.json
      "codemirror_mode": "scala"
 }
 EOF
+
+exit 0
+
 
 mkdir -p $PYSPARKLOCAL
 echo "Creating file $PYSPARKLOCAL/kernel.json"
